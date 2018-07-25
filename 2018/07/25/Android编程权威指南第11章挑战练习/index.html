@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="间歇性热爱学习">
+<meta name="description" content="Android编程权威指南第十一章挑战练习恢复CrimeFragment的边距由于ViewPager的布局参数不支持边距设置，所以android:layout_margin=&amp;quot;16dp&amp;quot; 并没有生效。这时候我们只需要把代码替换为android:padding=&amp;quot;16dp&amp;quot;即可。 添加Jump to First 按钮和Jump to Last 按钮 给Crim">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android编程权威指南第11章挑战练习">
 <meta property="og:url" content="http://yoursite.com/2018/07/25/Android编程权威指南第11章挑战练习/index.html">
 <meta property="og:site_name" content="DevMcry">
-<meta property="og:description" content="间歇性热爱学习">
+<meta property="og:description" content="Android编程权威指南第十一章挑战练习恢复CrimeFragment的边距由于ViewPager的布局参数不支持边距设置，所以android:layout_margin=&amp;quot;16dp&amp;quot; 并没有生效。这时候我们只需要把代码替换为android:padding=&amp;quot;16dp&amp;quot;即可。 添加Jump to First 按钮和Jump to Last 按钮 给Crim">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-25T14:53:00.866Z">
+<meta property="og:updated_time" content="2018-07-25T15:56:35.638Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android编程权威指南第11章挑战练习">
-<meta name="twitter:description" content="间歇性热爱学习">
+<meta name="twitter:description" content="Android编程权威指南第十一章挑战练习恢复CrimeFragment的边距由于ViewPager的布局参数不支持边距设置，所以android:layout_margin=&amp;quot;16dp&amp;quot; 并没有生效。这时候我们只需要把代码替换为android:padding=&amp;quot;16dp&amp;quot;即可。 添加Jump to First 按钮和Jump to Last 按钮 给Crim">
 
 
 
@@ -319,7 +319,103 @@
       
 
       
-        
+        <h1 id="Android编程权威指南第十一章挑战练习"><a href="#Android编程权威指南第十一章挑战练习" class="headerlink" title="Android编程权威指南第十一章挑战练习"></a>Android编程权威指南第十一章挑战练习</h1><h2 id="恢复CrimeFragment的边距"><a href="#恢复CrimeFragment的边距" class="headerlink" title="恢复CrimeFragment的边距"></a>恢复CrimeFragment的边距</h2><p>由于<code>ViewPager</code>的布局参数不支持边距设置，所以<code>android:layout_margin=&quot;16dp&quot;</code> 并没有生效。这时候我们只需要把代码替换为<code>android:padding=&quot;16dp&quot;</code>即可。</p>
+<h2 id="添加Jump-to-First-按钮和Jump-to-Last-按钮"><a href="#添加Jump-to-First-按钮和Jump-to-Last-按钮" class="headerlink" title="添加Jump to First 按钮和Jump to Last 按钮"></a>添加Jump to First 按钮和Jump to Last 按钮</h2><blockquote>
+<p>给CrimePagerActivity添加两个按钮。允许使用它们快速跳至第一条和最后一条crime记<br>录。当然，要注意控制，查看第一条记录时应禁用Jump to First按钮，查看最后一条时禁用Jump to<br>Last按钮。</p>
+</blockquote>
+<p><strong>解决思路:</strong><br>利用<code>ViewPager</code>的<code>addOnPageChangeListener()</code>方法实现<br><code>ViewPager.OnPageChangeListener()</code>实现以下三个方法:</p>
+<ul>
+<li><code>onPageScrolled</code></li>
+<li><code>onPageSelected</code></li>
+<li><code>onPageScrollStateChanged</code></li>
+</ul>
+<p>我们要做的就是利用<code>onPageSelected()</code>方法去设定Button的Enabled属性</p>
+<p><strong>1. 修改 activity_crime_pager.xml</strong></p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;
+    android:orientation=&quot;vertical&quot;&gt;
+&lt;android.support.v4.view.ViewPager
+    android:id=&quot;@+id/crime_view_pager&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    android:layout_weight=&quot;1&quot;&gt;
+
+&lt;/android.support.v4.view.ViewPager&gt;
+
+&lt;LinearLayout
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    android:orientation=&quot;horizontal&quot;
+    android:padding=&quot;16dp&quot;
+    android:weightSum=&quot;2&quot;&gt;
+
+    &lt;Button
+        android:id=&quot;@+id/jump_to_first&quot;
+        android:layout_width=&quot;0dp&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:layout_weight=&quot;1&quot;
+        android:text=&quot;@string/jump_to_first&quot;
+        android:textAllCaps=&quot;false&quot; /&gt;
+
+    &lt;Button
+        android:id=&quot;@+id/jump_to_last&quot;
+        android:layout_width=&quot;0dp&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:layout_weight=&quot;1&quot;
+        android:text=&quot;@string/jump_to_last&quot;
+        android:textAllCaps=&quot;false&quot; /&gt;
+
+&lt;/LinearLayout&gt;
+</code></pre><p></p>
+<p><strong>2.修改CrimePagerActivity.java</strong></p>
+<pre><code>@Override
+protected void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_crime_pager);
+    ...
+    jumpToFirst = findViewById(R.id.jump_to_first);
+    jumpToFirst.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            mViewPager.setCurrentItem(0);
+        }
+    });
+    jumpToLast = findViewById(R.id.jump_to_last);
+    jumpToLast.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            mViewPager.setCurrentItem(mCrimes.size() - 1);
+        }
+    });
+    mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        @Override
+        public void onPageScrolled(int i, float v, int i1) {
+
+        }
+
+        @Override
+        public void onPageSelected(int i) {
+            jumpToFirst.setEnabled(true);
+            jumpToLast.setEnabled(true);
+            if (i == 0)
+                jumpToFirst.setEnabled(false);
+            else if (i == mCrimes.size() - 1)
+                jumpToLast.setEnabled(false);
+
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int i) {
+
+        }
+    });
+    ...
+}
+</code></pre><p>运行程序查看结果</p>
+<p><strong>本章小结</strong><br>ViewPager在某种程度上类似于RecyclerView。RecyclerView需借助于Adapter提供视图。同样，ViewPager需要PagerAdapter的支持。不过，相较于RecyclerView与Adapter间的协同工作，ViewPager与PagerAdapter间的配合要复杂得多。好在Google提供了PagerAdapter的子类FragmentStatePagerAdapter，它能协助处理许多细节问题。<br>FragmentPagerAdapter是另外一种可用的PagerAdapter，其用法与FragmentStatePagerAdapter基本一致。唯一的区别在于，卸载不再需要的fragment时，各自采用的处理方法有所不同。<br>FragmentStatePagerAdapter类名中的“state”表明：在销毁fragment时，可在<code>onSaveInstanceState(Bundle)</code>方法中保存fragment的Bundle信息。用户切换回来时，保存的实例状态可用来生成新的fragment。<br>相比之下，FragmentPagerAdapter有不同的做法。对于不再需要的fragment，FragmentPagerAdapter会选择调用事务的<code>detach(Fragment)</code>方法来处理它，而非<code>remove(Fragment)</code>方法。也就是说，FragmentPagerAdapter只是销毁了fragment的视图，而fragment实例还保留在FragmentManager中。因此，FragmentPagerAdapter创建的fragment永远不会被销毁。</p>
+
       
     </div>
     
@@ -427,8 +523,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -476,6 +581,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Android编程权威指南第十一章挑战练习"><span class="nav-number">1.</span> <span class="nav-text">Android编程权威指南第十一章挑战练习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#恢复CrimeFragment的边距"><span class="nav-number">1.1.</span> <span class="nav-text">恢复CrimeFragment的边距</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加Jump-to-First-按钮和Jump-to-Last-按钮"><span class="nav-number">1.2.</span> <span class="nav-text">添加Jump to First 按钮和Jump to Last 按钮</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
