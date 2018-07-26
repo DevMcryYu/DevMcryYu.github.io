@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="DevMcry">
 <meta property="og:description" content="Android编程权威指南第十一章挑战练习恢复CrimeFragment的边距由于ViewPager的布局参数不支持边距设置，所以android:layout_margin=&amp;quot;16dp&amp;quot; 并没有生效。这时候我们只需要把代码替换为android:padding=&amp;quot;16dp&amp;quot;即可。 添加Jump to First 按钮和Jump to Last 按钮 给Crim">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-25T15:56:35.638Z">
+<meta property="og:updated_time" content="2018-07-25T16:11:28.976Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android编程权威指南第11章挑战练习">
 <meta name="twitter:description" content="Android编程权威指南第十一章挑战练习恢复CrimeFragment的边距由于ViewPager的布局参数不支持边距设置，所以android:layout_margin=&amp;quot;16dp&amp;quot; 并没有生效。这时候我们只需要把代码替换为android:padding=&amp;quot;16dp&amp;quot;即可。 添加Jump to First 按钮和Jump to Last 按钮 给Crim">
@@ -319,11 +319,11 @@
       
 
       
-        <h1 id="Android编程权威指南第十一章挑战练习"><a href="#Android编程权威指南第十一章挑战练习" class="headerlink" title="Android编程权威指南第十一章挑战练习"></a>Android编程权威指南第十一章挑战练习</h1><h2 id="恢复CrimeFragment的边距"><a href="#恢复CrimeFragment的边距" class="headerlink" title="恢复CrimeFragment的边距"></a>恢复CrimeFragment的边距</h2><p>由于<code>ViewPager</code>的布局参数不支持边距设置，所以<code>android:layout_margin=&quot;16dp&quot;</code> 并没有生效。这时候我们只需要把代码替换为<code>android:padding=&quot;16dp&quot;</code>即可。</p>
+        <h1 id="Android编程权威指南第十一章挑战练习"><a href="#Android编程权威指南第十一章挑战练习" class="headerlink" title="Android编程权威指南第十一章挑战练习"></a>Android编程权威指南第十一章挑战练习</h1><h2 id="恢复CrimeFragment的边距"><a href="#恢复CrimeFragment的边距" class="headerlink" title="恢复CrimeFragment的边距"></a>恢复CrimeFragment的边距</h2><p>由于ViewPager的布局参数不支持边距设置，所以<code>android:layout_margin=&quot;16dp&quot;</code> 并没有生效。这时候我们只需要把代码替换为<code>android:padding=&quot;16dp&quot;</code>即可。</p>
 <h2 id="添加Jump-to-First-按钮和Jump-to-Last-按钮"><a href="#添加Jump-to-First-按钮和Jump-to-Last-按钮" class="headerlink" title="添加Jump to First 按钮和Jump to Last 按钮"></a>添加Jump to First 按钮和Jump to Last 按钮</h2><blockquote>
 <p>给CrimePagerActivity添加两个按钮。允许使用它们快速跳至第一条和最后一条crime记<br>录。当然，要注意控制，查看第一条记录时应禁用Jump to First按钮，查看最后一条时禁用Jump to<br>Last按钮。</p>
 </blockquote>
-<p><strong>解决思路:</strong><br>利用<code>ViewPager</code>的<code>addOnPageChangeListener()</code>方法实现<br><code>ViewPager.OnPageChangeListener()</code>实现以下三个方法:</p>
+<p><strong>解决思路:</strong><br>利用ViewPager的<code>addOnPageChangeListener()</code>方法实现<br><code>ViewPager.OnPageChangeListener()</code>实现以下三个方法:</p>
 <ul>
 <li><code>onPageScrolled</code></li>
 <li><code>onPageSelected</code></li>
