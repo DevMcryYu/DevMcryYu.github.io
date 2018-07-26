@@ -335,89 +335,53 @@
 </ul>
 <p>我们要做的就是利用<code>onPageSelected()</code>方法去设定Button的Enabled属性</p>
 <p><strong>1. 修改 activity_crime_pager.xml</strong></p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
-    android:layout_width=&quot;match_parent&quot;
-    android:layout_height=&quot;match_parent&quot;
-    android:orientation=&quot;vertical&quot;&gt;
-&lt;android.support.v4.view.ViewPager
-    android:id=&quot;@+id/crime_view_pager&quot;
-    android:layout_width=&quot;match_parent&quot;
-    android:layout_height=&quot;wrap_content&quot;
-    android:layout_weight=&quot;1&quot;&gt;
-
-&lt;/android.support.v4.view.ViewPager&gt;
-
-&lt;LinearLayout
-    android:layout_width=&quot;match_parent&quot;
-    android:layout_height=&quot;wrap_content&quot;
-    android:orientation=&quot;horizontal&quot;
-    android:padding=&quot;16dp&quot;
-    android:weightSum=&quot;2&quot;&gt;
-
-    &lt;Button
-        android:id=&quot;@+id/jump_to_first&quot;
-        android:layout_width=&quot;0dp&quot;
-        android:layout_height=&quot;wrap_content&quot;
-        android:layout_weight=&quot;1&quot;
-        android:text=&quot;@string/jump_to_first&quot;
-        android:textAllCaps=&quot;false&quot; /&gt;
-
-    &lt;Button
-        android:id=&quot;@+id/jump_to_last&quot;
-        android:layout_width=&quot;0dp&quot;
-        android:layout_height=&quot;wrap_content&quot;
-        android:layout_weight=&quot;1&quot;
-        android:text=&quot;@string/jump_to_last&quot;
-        android:textAllCaps=&quot;false&quot; /&gt;
-
-&lt;/LinearLayout&gt;
-</code></pre><p></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">    &lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span>?&gt;</span><br><span class="line">    &lt;LinearLayout xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">        android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">        android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">        android:orientation=<span class="string">"vertical"</span>&gt;</span><br><span class="line">    &lt;android.support.v4.view.ViewPager</span><br><span class="line">        android:id=<span class="string">"@+id/crime_view_pager"</span></span><br><span class="line">        android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">        android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">        android:layout_weight=<span class="string">"1"</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;/android.support.v4.view.ViewPager&gt;</span><br><span class="line"></span><br><span class="line">    &lt;LinearLayout</span><br><span class="line">        android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">        android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">        android:orientation=<span class="string">"horizontal"</span></span><br><span class="line">        android:padding=<span class="string">"16dp"</span></span><br><span class="line">        android:weightSum=<span class="string">"2"</span>&gt;</span><br><span class="line"></span><br><span class="line">        &lt;Button</span><br><span class="line">            android:id=<span class="string">"@+id/jump_to_first"</span></span><br><span class="line">            android:layout_width=<span class="string">"0dp"</span></span><br><span class="line">            android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">            android:layout_weight=<span class="string">"1"</span></span><br><span class="line">            android:text=<span class="string">"@string/jump_to_first"</span></span><br><span class="line">            android:textAllCaps=<span class="string">"false"</span> /&gt;</span><br><span class="line"></span><br><span class="line">        &lt;Button</span><br><span class="line">            android:id=<span class="string">"@+id/jump_to_last"</span></span><br><span class="line">            android:layout_width=<span class="string">"0dp"</span></span><br><span class="line">            android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">            android:layout_weight=<span class="string">"1"</span></span><br><span class="line">            android:text=<span class="string">"@string/jump_to_last"</span></span><br><span class="line">            android:textAllCaps=<span class="string">"false"</span> /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;/LinearLayout&gt;</span><br><span class="line">&lt;/LinearLayout&gt;</span><br></pre></td></tr></table></figure>
 <p><strong>2.修改CrimePagerActivity.java</strong></p>
-<pre><code>@Override
-protected void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+<pre><code class="java"><span class="meta">@Override</span>
+<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@Nullable Bundle savedInstanceState)</span> </span>{
+    <span class="keyword">super</span>.onCreate(savedInstanceState);
     setContentView(R.layout.activity_crime_pager);
     ...
     jumpToFirst = findViewById(R.id.jump_to_first);
-    jumpToFirst.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            mViewPager.setCurrentItem(0);
+    jumpToFirst.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() {
+        <span class="meta">@Override</span>
+        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>{
+            mViewPager.setCurrentItem(<span class="number">0</span>);
         }
     });
     jumpToLast = findViewById(R.id.jump_to_last);
-    jumpToLast.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            mViewPager.setCurrentItem(mCrimes.size() - 1);
+    jumpToLast.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() {
+        <span class="meta">@Override</span>
+        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>{
+            mViewPager.setCurrentItem(mCrimes.size() - <span class="number">1</span>);
         }
     });
-    mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-        @Override
-        public void onPageScrolled(int i, float v, int i1) {
+    mViewPager.addOnPageChangeListener(<span class="keyword">new</span> ViewPager.OnPageChangeListener() {
+        <span class="meta">@Override</span>
+        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPageScrolled</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">float</span> v, <span class="keyword">int</span> i1)</span> </span>{
 
         }
 
-        @Override
-        public void onPageSelected(int i) {
-            jumpToFirst.setEnabled(true);
-            jumpToLast.setEnabled(true);
-            if (i == 0)
-                jumpToFirst.setEnabled(false);
-            else if (i == mCrimes.size() - 1)
-                jumpToLast.setEnabled(false);
+        <span class="meta">@Override</span>
+        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPageSelected</span><span class="params">(<span class="keyword">int</span> i)</span> </span>{
+            jumpToFirst.setEnabled(<span class="keyword">true</span>);
+            jumpToLast.setEnabled(<span class="keyword">true</span>);
+            <span class="keyword">if</span> (i == <span class="number">0</span>)
+                jumpToFirst.setEnabled(<span class="keyword">false</span>);
+            <span class="keyword">else</span> <span class="keyword">if</span> (i == mCrimes.size() - <span class="number">1</span>)
+                jumpToLast.setEnabled(<span class="keyword">false</span>);
 
         }
 
-        @Override
-        public void onPageScrollStateChanged(int i) {
+        <span class="meta">@Override</span>
+        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPageScrollStateChanged</span><span class="params">(<span class="keyword">int</span> i)</span> </span>{
 
         }
     });
     ...
 }
-</code></pre><p>运行程序查看结果</p>
+</code></pre>
+<p>运行程序查看结果</p>
 <p><strong>本章小结</strong><br>ViewPager在某种程度上类似于RecyclerView。RecyclerView需借助于Adapter提供视图。同样，ViewPager需要PagerAdapter的支持。不过，相较于RecyclerView与Adapter间的协同工作，ViewPager与PagerAdapter间的配合要复杂得多。好在Google提供了PagerAdapter的子类FragmentStatePagerAdapter，它能协助处理许多细节问题。<br>FragmentPagerAdapter是另外一种可用的PagerAdapter，其用法与FragmentStatePagerAdapter基本一致。唯一的区别在于，卸载不再需要的fragment时，各自采用的处理方法有所不同。<br>FragmentStatePagerAdapter类名中的“state”表明：在销毁fragment时，可在<code>onSaveInstanceState(Bundle)</code>方法中保存fragment的Bundle信息。用户切换回来时，保存的实例状态可用来生成新的fragment。<br>相比之下，FragmentPagerAdapter有不同的做法。对于不再需要的fragment，FragmentPagerAdapter会选择调用事务的<code>detach(Fragment)</code>方法来处理它，而非<code>remove(Fragment)</code>方法。也就是说，FragmentPagerAdapter只是销毁了fragment的视图，而fragment实例还保留在FragmentManager中。因此，FragmentPagerAdapter创建的fragment永远不会被销毁。</p>
 
           
