@@ -322,22 +322,14 @@
 
       
         
-          
-            <h1 id="Android编程权威指南第12章学习笔记"><a href="#Android编程权威指南第12章学习笔记" class="headerlink" title="Android编程权威指南第12章学习笔记"></a>Android编程权威指南第12章学习笔记</h1><hr>
-<h2 id="Fragment间的数据传递"><a href="#Fragment间的数据传递" class="headerlink" title="Fragment间的数据传递"></a>Fragment间的数据传递</h2><p>要实现同一activity托管的两个fragment之间的数据传递，首先需要新建一个 <code>newInstance()</code> 方法,然后将数据作为argument附加给fragment。<br>为返回数据，并更新模型层以及对应视图，需将数据打包为extra并附加到Intent上，然后调用Fragment的 <code>onActivityResult(...)</code> 方法，并传入准备好的Intent参数。</p>
-<h3 id="1-传递数据给Fragment"><a href="#1-传递数据给Fragment" class="headerlink" title="1. 传递数据给Fragment"></a>1. 传递数据给Fragment</h3><p>要传递数据给Fragment，需将它保存在Fragment的argument bundle中。这样，Fragment就能直接获取它。创建和设置fragment argument通常是在newInstance()方法中完成的(代替fragment构造方法)<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DatePickerFragment</span> <span class="keyword">extends</span> <span class="title">DialogFragment</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String ARG_DATE = <span class="string">"date"</span>;</span><br><span class="line">  <span class="keyword">private</span> DatePicker mDatePicker;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> DatePickerFragment <span class="title">newInstance</span><span class="params">(Date date)</span> </span>&#123;</span><br><span class="line">    Bundle args = <span class="keyword">new</span> Bundle();</span><br><span class="line">    args.putSerializable(ARG_DATE, date);</span><br><span class="line">    DatePickerFragment fragment = <span class="keyword">new</span> DatePickerFragment();</span><br><span class="line">    fragment.setArguments(args);</span><br><span class="line">    <span class="keyword">return</span> fragment;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line">```  </span><br><span class="line">最后用 `Fragment.newInstance(Date)` 方法替换Fragment的构造方法。  </span><br><span class="line">```java</span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> View <span class="title">onCreateView</span><span class="params">(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">  ...</span><br><span class="line">  mDateButton = (Button)v.findViewById(R.id.crime_date);</span><br><span class="line">  mDateButton.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">      FragmentManager manager = getFragmentManager()</span><br><span class="line">      DatePickerFragment dialog = <span class="keyword">new</span> DatePickerFragment();</span><br><span class="line">      DatePickerFragment dialog = DatePickerFragment.newInstance(mCrime.getDate());</span><br><span class="line">      dialog.show(manager, DIALOG_DATE);</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">  ...</span><br><span class="line">  <span class="keyword">return</span> v;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="2-返回数据给Fragment"><a href="#2-返回数据给Fragment" class="headerlink" title="2. 返回数据给Fragment"></a>2. 返回数据给Fragment</h3><p>如果是activity的数据回传,我们调用 <code>startActivityForResult(...)</code> 方法,ActivityManager负责跟踪管理activity父子关系。回传数据后,子activity被销毁,但ActivityManager知道接收数据的是哪个activity。  </p>
-<h4 id="a-设置目标fragment"><a href="#a-设置目标fragment" class="headerlink" title="a. 设置目标fragment"></a>a. 设置目标fragment</h4><p>利用 <code>public void setTargetFragment(Fragment fragment, int requestCode)</code> 方法建立关联。该方法有两个参数：目标fragment以及类似于传入 <code>startActivityForResult(...)</code> 方法的请求代码。需要时，目标fragment使用请求代码确认是哪个fragment在回传数据。目标fragment和请求代码由FragmentManager负责跟踪管理，可调用fragment(设置目标fragment的fragment)的 <code>getTargetFragment()</code> 方法和 <code>getTargetRequestCode()</code> 方法获取它们。</p>
-<h4 id="b-传递数据给目标fragment"><a href="#b-传递数据给目标fragment" class="headerlink" title="b.传递数据给目标fragment"></a>b.传递数据给目标fragment</h4><p>建立联系后需将数据回传给目标fragment，调用 <code>onActivityResult(int, int, Intent)</code> 方法将回传数据将作为extra附加给Intent。 <code>Activity.onActivityResult(...)</code> 方法是ActivityManager在子activity被销毁后调用的父activity方法。处理activity间的数据返回时，ActivityManager会自动调用 <code>Activity.onActivity-Result(...)</code> 方法。父activity接收到 <code>Activity.onActivityResult(...)</code> 方法调用命令后，其FragmentManager会调用对应fragment的 <code>Fragment.onActivityResult(...)</code> 方法。该方法包含以下三个参数：</p>
-<ul>
-<li>请求代码：与传入setTargetFragment(…)方法的代码相匹配，告诉目标fragment返回<br>结果来自哪里。</li>
-<li>结果代码：决定下一步该采取什么行动。</li>
-<li>Intent： 包含extra数据。</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onActivityResult</span><span class="params">(<span class="keyword">int</span> requestCode, <span class="keyword">int</span> resultCode, Intent data)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (resultCode != Activity.RESULT_OK) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (requestCode == REQUEST_DATE) &#123;</span><br><span class="line">    Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);</span><br><span class="line">    <span class="comment">//在这里对数据进行处理</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="代码封装"><a href="#代码封装" class="headerlink" title="代码封装"></a>代码封装</h3><p>除手动封装代码的方式外， 还可以使用Android Studio 的内置工具。高亮选取设置的代码右键单击并选择Refactor → Extract → Method…菜单项。设置方法为私有并将其命名。点击OK按钮，Android Studio会提示还有其他地<br>方使用了这段代码。点击Yes允许它自动处理。然后确认该方法封装完成并在相应地方已调用，</p>
-
-          
+          <h1 id="Android编程权威指南第12章学习笔记"><a href="#Android编程权威指南第12章学习笔记" class="headerlink" title="Android编程权威指南第12章学习笔记"></a>Android编程权威指南第12章学习笔记</h1>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/07/30/Android编程权威指南第12章学习笔记/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -454,70 +446,14 @@
 
       
         
-          
-            <h1 id="Android编程权威指南第十一章挑战练习"><a href="#Android编程权威指南第十一章挑战练习" class="headerlink" title="Android编程权威指南第十一章挑战练习"></a>Android编程权威指南第十一章挑战练习</h1><hr>
-<h2 id="恢复CrimeFragment的边距"><a href="#恢复CrimeFragment的边距" class="headerlink" title="恢复CrimeFragment的边距"></a>恢复CrimeFragment的边距</h2><p>由于ViewPager的布局参数不支持边距设置，所以<code>android:layout_margin=&quot;16dp&quot;</code> 并没有生效。这时候我们只需要把代码替换为<code>android:padding=&quot;16dp&quot;</code>即可。</p>
-<h2 id="添加Jump-to-First-按钮和Jump-to-Last-按钮"><a href="#添加Jump-to-First-按钮和Jump-to-Last-按钮" class="headerlink" title="添加Jump to First 按钮和Jump to Last 按钮"></a>添加Jump to First 按钮和Jump to Last 按钮</h2><blockquote>
-<p>给CrimePagerActivity添加两个按钮。允许使用它们快速跳至第一条和最后一条crime记录。当然，要注意控制，查看第一条记录时应禁用Jump to First按钮，查看最后一条时禁用Jump to Last按钮。</p>
-</blockquote>
-<p><strong>解决思路:</strong><br>利用ViewPager的<code>addOnPageChangeListener()</code>方法实现<br><code>ViewPager.OnPageChangeListener()</code>实现以下三个方法:</p>
-<ul>
-<li><code>onPageScrolled</code></li>
-<li><code>onPageSelected</code></li>
-<li><code>onPageScrollStateChanged</code></li>
-</ul>
-<p>我们要做的就是利用<code>onPageSelected()</code>方法去设定Button的Enabled属性</p>
-<p><strong>1. 修改 activity_crime_pager.xml</strong></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">    &lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line">    <span class="tag">&lt;<span class="name">LinearLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:orientation</span>=<span class="string">"vertical"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">android.support.v4.view.ViewPager</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/crime_view_pager"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_weight</span>=<span class="string">"1"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">android.support.v4.view.ViewPager</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">LinearLayout</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:orientation</span>=<span class="string">"horizontal"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:padding</span>=<span class="string">"16dp"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:weightSum</span>=<span class="string">"2"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">Button</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">"@+id/jump_to_first"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">"0dp"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_weight</span>=<span class="string">"1"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:text</span>=<span class="string">"@string/jump_to_first"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:textAllCaps</span>=<span class="string">"false"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">Button</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">"@+id/jump_to_last"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">"0dp"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_weight</span>=<span class="string">"1"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:text</span>=<span class="string">"@string/jump_to_last"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:textAllCaps</span>=<span class="string">"false"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><strong>2.修改CrimePagerActivity.java</strong></p>
-<pre><code class="java"><span class="meta">@Override</span>
-<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@Nullable Bundle savedInstanceState)</span> </span>{
-    <span class="keyword">super</span>.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_crime_pager);
-    ...
-    jumpToFirst = findViewById(R.id.jump_to_first);
-    jumpToFirst.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() {
-        <span class="meta">@Override</span>
-        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>{
-            mViewPager.setCurrentItem(<span class="number">0</span>);
-        }
-    });
-    jumpToLast = findViewById(R.id.jump_to_last);
-    jumpToLast.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() {
-        <span class="meta">@Override</span>
-        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>{
-            mViewPager.setCurrentItem(mCrimes.size() - <span class="number">1</span>);
-        }
-    });
-    mViewPager.addOnPageChangeListener(<span class="keyword">new</span> ViewPager.OnPageChangeListener() {
-        <span class="meta">@Override</span>
-        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPageScrolled</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">float</span> v, <span class="keyword">int</span> i1)</span> </span>{
-
-        }
-
-        <span class="meta">@Override</span>
-        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPageSelected</span><span class="params">(<span class="keyword">int</span> i)</span> </span>{
-            jumpToFirst.setEnabled(<span class="keyword">true</span>);
-            jumpToLast.setEnabled(<span class="keyword">true</span>);
-            <span class="keyword">if</span> (i == <span class="number">0</span>)
-                jumpToFirst.setEnabled(<span class="keyword">false</span>);
-            <span class="keyword">else</span> <span class="keyword">if</span> (i == mCrimes.size() - <span class="number">1</span>)
-                jumpToLast.setEnabled(<span class="keyword">false</span>);
-
-        }
-
-        <span class="meta">@Override</span>
-        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPageScrollStateChanged</span><span class="params">(<span class="keyword">int</span> i)</span> </span>{
-
-        }
-    });
-    ...
-}
-</code></pre>
-<p>运行程序查看结果</p>
-<p><strong>本章小结</strong><br>ViewPager在某种程度上类似于RecyclerView。RecyclerView需借助于Adapter提供视图。同样，ViewPager需要PagerAdapter的支持。不过，相较于RecyclerView与Adapter间的协同工作，ViewPager与PagerAdapter间的配合要复杂得多。好在Google提供了PagerAdapter的子类FragmentStatePagerAdapter，它能协助处理许多细节问题。<br>FragmentPagerAdapter是另外一种可用的PagerAdapter，其用法与FragmentStatePagerAdapter基本一致。唯一的区别在于，卸载不再需要的fragment时，各自采用的处理方法有所不同。<br>FragmentStatePagerAdapter类名中的“state”表明：在销毁fragment时，可在<code>onSaveInstanceState(Bundle)</code>方法中保存fragment的Bundle信息。用户切换回来时，保存的实例状态可用来生成新的fragment。<br>相比之下，FragmentPagerAdapter有不同的做法。对于不再需要的fragment，FragmentPagerAdapter会选择调用事务的<code>detach(Fragment)</code>方法来处理它，而非<code>remove(Fragment)</code>方法。也就是说，FragmentPagerAdapter只是销毁了fragment的视图，而fragment实例还保留在FragmentManager中。因此，FragmentPagerAdapter创建的fragment永远不会被销毁。</p>
-
-          
+          <h1 id="Android编程权威指南第十一章挑战练习"><a href="#Android编程权威指南第十一章挑战练习" class="headerlink" title="Android编程权威指南第十一章挑战练习"></a>Android编程权威指南第十一章挑战练习</h1>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/07/25/Android编程权威指南第11章挑战练习/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
