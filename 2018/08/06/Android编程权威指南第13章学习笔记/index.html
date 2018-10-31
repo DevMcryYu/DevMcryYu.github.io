@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="使用 AppCompat 库Android 5.0 (Lollipop) 引入工具栏这个新增组件。要整合使用 AppCompat 库,你需要:  添加 AppCompat 依赖项; 使用一种 AppCompat 主题; 确保所有activity都是AppCompatActivity子类。工具栏菜单 工具栏菜单由菜单项（又称操作项）组成，它占据着工具栏的右上方区域。菜单项的操作应用于当前屏幕，甚至">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android编程权威指南第13章学习笔记">
+<meta property="og:url" content="http://yoursite.com/2018/08/06/Android编程权威指南第13章学习笔记/index.html">
+<meta property="og:site_name" content="DevMcry">
+<meta property="og:description" content="使用 AppCompat 库Android 5.0 (Lollipop) 引入工具栏这个新增组件。要整合使用 AppCompat 库,你需要:  添加 AppCompat 依赖项; 使用一种 AppCompat 主题; 确保所有activity都是AppCompatActivity子类。工具栏菜单 工具栏菜单由菜单项（又称操作项）组成，它占据着工具栏的右上方区域。菜单项的操作应用于当前屏幕，甚至">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-10-31T10:54:57.638Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android编程权威指南第13章学习笔记">
+<meta name="twitter:description" content="使用 AppCompat 库Android 5.0 (Lollipop) 引入工具栏这个新增组件。要整合使用 AppCompat 库,你需要:  添加 AppCompat 依赖项; 使用一种 AppCompat 主题; 确保所有activity都是AppCompatActivity子类。工具栏菜单 工具栏菜单由菜单项（又称操作项）组成，它占据着工具栏的右上方区域。菜单项的操作应用于当前屏幕，甚至">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/06/Android编程权威指南第13章学习笔记/"/>
+
+
+
+
+
+  <title>Android编程权威指南第13章学习笔记 | DevMcry</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">DevMcry</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/06/Android编程权威指南第13章学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DevMcry">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevMcry">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android编程权威指南第13章学习笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-06T14:47:31+08:00">
+                2018-08-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <a id="more"></a>
+<h2 id="使用-AppCompat-库"><a href="#使用-AppCompat-库" class="headerlink" title="使用 AppCompat 库"></a>使用 AppCompat 库</h2><p>Android 5.0 (Lollipop) 引入工具栏这个新增组件。要整合使用 AppCompat 库,你需要:</p>
+<ul>
+<li>添加 AppCompat 依赖项;</li>
+<li>使用一种 AppCompat 主题;</li>
+<li>确保所有activity都是AppCompatActivity子类。<h3 id="工具栏菜单"><a href="#工具栏菜单" class="headerlink" title="工具栏菜单"></a>工具栏菜单</h3><blockquote>
+<p>工具栏菜单由菜单项（又称操作项）组成，它占据着工具栏的右上方区域。菜单项的操作应用于当前屏幕，甚至整个应用。</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="1-在XML文件中定义菜单"><a href="#1-在XML文件中定义菜单" class="headerlink" title="1. 在XML文件中定义菜单"></a>1. 在XML文件中定义菜单</h4><p>菜单是一种类似于布局的资源。创建菜单定义文件并将其放置在 res/menu 目录下，Android会自动生成相应的资源ID。随后，在代码中实例化菜单时，就可以直接使用。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">menu</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">xmlns:app</span>=<span class="string">"http://schemas.android.com/apk/res-auto"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span></span></span><br><span class="line"><span class="tag">      <span class="attr">android:id</span>=<span class="string">"@+id/new_crime"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">android:icon</span>=<span class="string">"@android:drawable/ic_menu_add"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">android:title</span>=<span class="string">"@string/new_crime"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">app:showAsAction</span>=<span class="string">"ifRoom|withText"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">menu</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>其中 showAsAction 属性用于指定菜单项是显示在工具栏上，还是隐藏于溢出菜单(overflow menu)。该属性当前设置为 ifRoom 和 withText 的组合值。因此，只要空间足够，菜单项图标及其文字描述都会显示在工具栏上。如果空间仅够显示菜单项图标，文字描述就不会显示。如果空间大小不够显示任何项，菜单项就会隐藏到溢出菜单中。如果溢出菜单包含其他项，它们就会以三个点表示(位于工具栏最右端)。属性 showAsAction 还有另外两个可选值：always 和 never 。不推荐使用 always ，应尽量使用 ifRoom 属性值，让操作系统决定如何显示菜单项。对于那些很少用到的菜单项， never 属性值是个不错的选择。总之，为了避免用户界面混乱，工具栏上只应放置常用菜单项。  </p>
+<h4 id="2-创建菜单"><a href="#2-创建菜单" class="headerlink" title="2. 创建菜单"></a>2. 创建菜单</h4><p>在代码中，Activity 类提供了管理菜单的回调函数。需要选项菜单时，Android 会调用 Activity 的 <code>onCreateOptionsMenu(Menu)</code> 方法。同样 Fragment 也有一套自己的选项菜单回调函数。<br>创建菜单和响应菜单项选择事件的两个回调方法：<br><code>public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)</code><br><code>public boolean onOptionsItemSelected(MenuItem item)</code></p>
+<p>覆盖 <code>onCreateOptionsMenu(Menu, MenuInflater)</code>方法来实例化菜单,在以上方法中调用 <code>MenuInflater.inflate(int, Menu)</code> 方法并传入菜单文件的资源ID，将布局文件中定义的菜单项目填充到 Menu 实例中。</p>
+<p><code>Fragment.onCreateOptionsMenu(Menu, MenuInflater)</code> 方法是由 FragmentManager 负责调用的。因此，当 activity 接收到操作系统的 <code>onCreateOptionsMenu(...)</code> 方法回调请求时，我们必须明确告诉 FragmentManager ：其管理的 fragment 应接收 <code>onCreateOptionsMenu(...)</code> 方法的调用指令。要通知 FragmentManager ，需调用以下方法：<br><code>public void setHasOptionsMenu(boolean hasMenu)</code><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">    setHasOptionsMenu(<span class="keyword">true</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="3-相应菜单项选择"><a href="#3-相应菜单项选择" class="headerlink" title="3. 相应菜单项选择"></a>3. 相应菜单项选择</h4><p>用户点击菜单中的菜单项时，fragment 会收到 <code>onOptionsItemSelected(MenuItem)</code> 方法的回调请求。传入该方法的参数是一个描述用户选择的 MenuItem 实例。菜单通常包含多个菜单项。通过检查菜单项ID，可确定被选中的是哪个菜单项，然后作出相应的响应。这个ID实际就是在菜单定义文件中赋予菜单项的资源ID。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onOptionsItemSelected</span><span class="params">(MenuItem item)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">switch</span> (item.getItemId()) &#123;</span><br><span class="line">      <span class="keyword">case</span> R.id...:</span><br><span class="line">      <span class="comment">//响应事件</span></span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">super</span>.onOptionsItemSelected(item);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="层级式导航"><a href="#层级式导航" class="headerlink" title="层级式导航"></a>层级式导航</h3><blockquote>
+<p>后退键导航又称为临时性导航，只能返回到上一次浏览过的用户界面；而层级式导航（hierarchical navigation，有时又称为ancestral navigation）可在应用内逐级向上导航。有了层级式导航，用户可点击工具栏左边的向上按钮向上导航。</p>
+</blockquote>
+<p>打开 AndroidManifest.xml ，添加parentActivityName属性来开启应用的层级式导航。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">activity</span></span></span><br><span class="line"><span class="tag">  <span class="attr">android:name</span>=<span class="string">".currentActivityName"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">android:parentActivityName</span>=<span class="string">"parentActivityName"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>层级式导航的工作原理</strong><br>用户点击向上按钮自当前界面向上导航时，如下的intent会被创建：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent(<span class="keyword">this</span>, parentActivity.class);</span><br><span class="line">intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);</span><br><span class="line">startActivity(intent);</span><br><span class="line">finish();</span><br></pre></td></tr></table></figure></p>
+<p>FLAG_ACTIVITY_CLEAR_TOP 指示 Android 在回退栈中寻找指定的 activity 实例。如果实例存在，<br>则弹出栈内所有其他 activity ，让启动的目标 activity 出现在栈顶（显示在屏幕上）。</p>
+<h3 id="可选菜单项"><a href="#可选菜单项" class="headerlink" title="可选菜单项"></a>可选菜单项</h3><p>可通过以下语句实现设置工具栏子标题:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AppCompatActivity activity = (AppCompatActivity) getActivity();</span><br><span class="line">activity.getSupportActionBar().setSubtitle(subtitle);</span><br></pre></td></tr></table></figure></p>
+<h3 id="工具栏与操作栏"><a href="#工具栏与操作栏" class="headerlink" title="工具栏与操作栏"></a>工具栏与操作栏</h3><p>首先，两者给我们最直观的印象就是工具栏界面更美观。工具栏的左边不再放置图标，右边菜单项的间距也更小。另外就是向上的导航按钮。操作栏上的这个按钮不够醒目，只是旁边按钮的附属物。除了视觉上的差异，在使用上，工具栏比操作栏更灵活。操作栏的使用限制多多，比如，整个应用只能配置一个操作栏且位置及尺寸必须固定（在屏幕顶部）。工具栏就没有这些限制。本章使用的工具栏应用了AppCompat主题。如果有需要，也可以通过activity和fragment布局定制标准视图的工具栏。可以在屏幕的任何位置摆放工具栏，甚至可以在同一屏配置多个工具栏。应用设计的自由度由此大大提高了，例如，可以为每个fragment定制专用工具栏。可以想象，在同一个用户界面托管多个fragment时，每个fragment都由自己的工具栏控制，这比所有fragment共享一个位于屏幕顶部的工具栏方便多了。此外，工具栏还能支持内嵌视图和调整高度，这极大地丰富了应用的交互模式。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>支持</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="DevMcry 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/06/写在开始/" rel="next" title="写在开始">
+                <i class="fa fa-chevron-left"></i> 写在开始
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/13/Android编程权威指南第14章学习笔记/" rel="prev" title="Android编程权威指南第14章学习笔记">
+                Android编程权威指南第14章学习笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="DevMcry" />
+            
+              <p class="site-author-name" itemprop="name">DevMcry</p>
+              <p class="site-description motion-element" itemprop="description">间歇性热爱学习</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-AppCompat-库"><span class="nav-number">1.</span> <span class="nav-text">使用 AppCompat 库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#工具栏菜单"><span class="nav-number">1.1.</span> <span class="nav-text">工具栏菜单</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-在XML文件中定义菜单"><span class="nav-number">1.1.1.</span> <span class="nav-text">1. 在XML文件中定义菜单</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-创建菜单"><span class="nav-number">1.1.2.</span> <span class="nav-text">2. 创建菜单</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-相应菜单项选择"><span class="nav-number">1.1.3.</span> <span class="nav-text">3. 相应菜单项选择</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#层级式导航"><span class="nav-number">1.2.</span> <span class="nav-text">层级式导航</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可选菜单项"><span class="nav-number">1.3.</span> <span class="nav-text">可选菜单项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工具栏与操作栏"><span class="nav-number">1.4.</span> <span class="nav-text">工具栏与操作栏</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DevMcry</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
