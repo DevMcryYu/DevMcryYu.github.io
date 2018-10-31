@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="SQLite数据库SQLite是类似于MySQL和PostgreSQL的开源关系型数据库。不同于其他数据库的是，SQLite使用单个文件存储数据，读写数据时使用SQLite库。Android标准库包含SQLite库以及配套的一些Java辅助类。">
+<meta name="description" content="SQLite数据库SQLite是类似于MySQL和PostgreSQL的开源关系型数据库。不同于其他数据库的是，SQLite使用单个文件存储数据，读写数据时使用SQLite库。Android标准库包含SQLite库以及配套的一些Java辅助类。 定义 schema定义schema的方式众多，如何选择往往因人而异。但所有方式都有一个共同的目标：“不要重复造轮子。”实际上，这也是人人都应遵守的编程准">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android编程权威指南第14章学习笔记">
 <meta property="og:url" content="http://yoursite.com/2018/08/13/Android编程权威指南第14章学习笔记/index.html">
 <meta property="og:site_name" content="DevMcry">
-<meta property="og:description" content="SQLite数据库SQLite是类似于MySQL和PostgreSQL的开源关系型数据库。不同于其他数据库的是，SQLite使用单个文件存储数据，读写数据时使用SQLite库。Android标准库包含SQLite库以及配套的一些Java辅助类。">
+<meta property="og:description" content="SQLite数据库SQLite是类似于MySQL和PostgreSQL的开源关系型数据库。不同于其他数据库的是，SQLite使用单个文件存储数据，读写数据时使用SQLite库。Android标准库包含SQLite库以及配套的一些Java辅助类。 定义 schema定义schema的方式众多，如何选择往往因人而异。但所有方式都有一个共同的目标：“不要重复造轮子。”实际上，这也是人人都应遵守的编程准">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-31T11:08:58.859Z">
+<meta property="og:updated_time" content="2018-10-31T11:10:49.484Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android编程权威指南第14章学习笔记">
-<meta name="twitter:description" content="SQLite数据库SQLite是类似于MySQL和PostgreSQL的开源关系型数据库。不同于其他数据库的是，SQLite使用单个文件存储数据，读写数据时使用SQLite库。Android标准库包含SQLite库以及配套的一些Java辅助类。">
+<meta name="twitter:description" content="SQLite数据库SQLite是类似于MySQL和PostgreSQL的开源关系型数据库。不同于其他数据库的是，SQLite使用单个文件存储数据，读写数据时使用SQLite库。Android标准库包含SQLite库以及配套的一些Java辅助类。 定义 schema定义schema的方式众多，如何选择往往因人而异。但所有方式都有一个共同的目标：“不要重复造轮子。”实际上，这也是人人都应遵守的编程准">
 
 
 
@@ -319,7 +319,8 @@
       
 
       
-        <h2 id="SQLite数据库"><a href="#SQLite数据库" class="headerlink" title="SQLite数据库"></a>SQLite数据库</h2><p>SQLite是类似于MySQL和PostgreSQL的开源关系型数据库。不同于其他数据库的是，SQLite使用单个文件存储数据，读写数据时使用SQLite库。Android标准库包含SQLite库以及配套的一些Java辅助类。<br><a id="more"></a></p>
+        <a id="more"></a>
+<h2 id="SQLite数据库"><a href="#SQLite数据库" class="headerlink" title="SQLite数据库"></a>SQLite数据库</h2><p>SQLite是类似于MySQL和PostgreSQL的开源关系型数据库。不同于其他数据库的是，SQLite使用单个文件存储数据，读写数据时使用SQLite库。Android标准库包含SQLite库以及配套的一些Java辅助类。</p>
 <h3 id="定义-schema"><a href="#定义-schema" class="headerlink" title="定义 schema"></a>定义 schema</h3><p>定义schema的方式众多，如何选择往往因人而异。但所有方式都有一个共同的目标：“不要重复造轮子。”实际上，这也是人人都应遵守的编程准则：多花时间思考复用代码的编写和调用，避免在应用中到处使用重复代码。</p>
 <h3 id="创建初始数据库"><a href="#创建初始数据库" class="headerlink" title="创建初始数据库"></a>创建初始数据库</h3><p>(1) 确认目标数据库是否存在。<br>(2) 如果不存在，首先创建数据库，然后创建数据表并初始化数据。<br>(3) 如果存在，打开并确认XXXDbSchema是否为最新（后续版本可能有改动）。<br>(4) 如果是旧版本，就先升级到最新版本。<br>以上工作可借助Android的SQLiteOpenHelper类处理。<br>调用 <code>getWritableDatabase()</code> 方法时，CrimeBaseHelper会做如下工作。<br>(1) 打开/data/data/…/databases/crimeBase.db数据库；如果<br>不存在，就先创建crimeBase.db数据库文件。<br>(2) 如果是首次创建数据库，就调用<code>onCreate(SQLiteDatabase)</code>方法，然后保存最新的版本号。<br>(3) 如果已创建过数据库，首先检查它的版本号。如果CrimeBaseHelper中的版本号更高，就调用<code>onUpgrade(SQLiteDatabase, int, int)</code>方法升级。<br>最后做个总结：onCreate(SQLiteDatabase)方法负责创建初始数据库；<code>onUpgrade(SQLiteDatabase, int, int)</code>方法负责与升级相关的工作。<br>使用 <code>db.execSQL(...)</code> 方法创建数据表。相比其他数据库，创建SQLite数据库表省事又简单：创建表字段时，不需要指定表字段类型。</p>
 <h3 id="写入数据库"><a href="#写入数据库" class="headerlink" title="写入数据库"></a>写入数据库</h3><h4 id="使用-ContantValues"><a href="#使用-ContantValues" class="headerlink" title="使用 ContantValues"></a>使用 ContantValues</h4><p>负责处理数据库写入和更新操作的辅助类是ContentValues。它是一个键值存储类，类似于<br>Java的HashMap和前面用过的Bundle。不同的是，ContentValues只能用于处理SQLite数据。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> ContentValues <span class="title">getContentValues</span><span class="params">(Crime crime)</span> </span>&#123;</span><br><span class="line">  ContentValues values = <span class="keyword">new</span> ContentValues();</span><br><span class="line"></span><br><span class="line">  values.put(CrimeTable.Cols.UUID, crime.getId().toString());</span><br><span class="line">  values.put(CrimeTable.Cols.TITLE, crime.getTitle());</span><br><span class="line">  values.put(CrimeTable.Cols.DATE, crime.getDate().getTime());</span><br><span class="line">  values.put(CrimeTable.Cols.SOLVED, crime.isSolved() ? <span class="number">1</span> : <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> values;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
@@ -483,6 +484,15 @@
 
             
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
             
 
           </nav>
