@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="设计模式学习笔记（Part.1）设计模式六大规则 单一职责原则：就一个类而言，应该仅有一个引起它变化的原因。 开放封闭原则：类、模块、函数等应该是可以拓展的，但是不可修改。开发封闭有两个含义：对于拓展是开放的，对于修改是封闭的。 里氏替换原则：所有引用基类（父类）的地方必须能透明的使用其子类的对象。也就是在软件中将一个基类对象替换成其子类对象，程序将不会产生任何错误或异常；反过来则不一定成立。里氏">
+<meta name="description" content="设计模式六大规则 单一职责原则：就一个类而言，应该仅有一个引起它变化的原因。 开放封闭原则：类、模块、函数等应该是可以拓展的，但是不可修改。开发封闭有两个含义：对于拓展是开放的，对于修改是封闭的。">
 <meta name="keywords" content="设计模式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="设计模式笔记笔记（Part.1）">
 <meta property="og:url" content="http://yoursite.com/2018/12/06/设计模式学习笔记（Part.1）/index.html">
 <meta property="og:site_name" content="DevMcry">
-<meta property="og:description" content="设计模式学习笔记（Part.1）设计模式六大规则 单一职责原则：就一个类而言，应该仅有一个引起它变化的原因。 开放封闭原则：类、模块、函数等应该是可以拓展的，但是不可修改。开发封闭有两个含义：对于拓展是开放的，对于修改是封闭的。 里氏替换原则：所有引用基类（父类）的地方必须能透明的使用其子类的对象。也就是在软件中将一个基类对象替换成其子类对象，程序将不会产生任何错误或异常；反过来则不一定成立。里氏">
+<meta property="og:description" content="设计模式六大规则 单一职责原则：就一个类而言，应该仅有一个引起它变化的原因。 开放封闭原则：类、模块、函数等应该是可以拓展的，但是不可修改。开发封闭有两个含义：对于拓展是开放的，对于修改是封闭的。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-08T06:39:03.476Z">
+<meta property="og:updated_time" content="2018-12-08T06:59:10.216Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式笔记笔记（Part.1）">
-<meta name="twitter:description" content="设计模式学习笔记（Part.1）设计模式六大规则 单一职责原则：就一个类而言，应该仅有一个引起它变化的原因。 开放封闭原则：类、模块、函数等应该是可以拓展的，但是不可修改。开发封闭有两个含义：对于拓展是开放的，对于修改是封闭的。 里氏替换原则：所有引用基类（父类）的地方必须能透明的使用其子类的对象。也就是在软件中将一个基类对象替换成其子类对象，程序将不会产生任何错误或异常；反过来则不一定成立。里氏">
+<meta name="twitter:description" content="设计模式六大规则 单一职责原则：就一个类而言，应该仅有一个引起它变化的原因。 开放封闭原则：类、模块、函数等应该是可以拓展的，但是不可修改。开发封闭有两个含义：对于拓展是开放的，对于修改是封闭的。">
 
 
 
@@ -352,9 +352,9 @@
       
 
       
-        <h1 id="设计模式学习笔记（Part-1）"><a href="#设计模式学习笔记（Part-1）" class="headerlink" title="设计模式学习笔记（Part.1）"></a>设计模式学习笔记（Part.1）</h1><h2 id="设计模式六大规则"><a href="#设计模式六大规则" class="headerlink" title="设计模式六大规则"></a>设计模式六大规则</h2><ul>
+        <h1 id="设计模式六大规则"><a href="#设计模式六大规则" class="headerlink" title="设计模式六大规则"></a>设计模式六大规则</h1><ul>
 <li><strong>单一职责原则：</strong><br>就一个类而言，应该仅有一个引起它变化的原因。</li>
-<li><strong>开放封闭原则：</strong><br>类、模块、函数等应该是可以拓展的，但是不可修改。开发封闭有两个含义：对于拓展是开放的，对于修改是封闭的。</li>
+<li><strong>开放封闭原则：</strong><br>类、模块、函数等应该是可以拓展的，但是不可修改。开发封闭有两个含义：对于拓展是开放的，对于修改是封闭的。<a id="more"></a></li>
 <li><strong>里氏替换原则：</strong><br>所有引用基类（父类）的地方必须能透明的使用其子类的对象。也就是在软件中将一个基类对象替换成其子类对象，程序将不会产生任何错误或异常；反过来则不一定成立。里氏替换原则是实现开放封闭原则的重要方式之一。在软件中尽量<strong>使用基类对象来对对象进行定义，在运行时再确定其子类类型。</strong><br>使用里氏替换原则需要注意：  <ul>
 <li>子类的所有方法必须在父类中声明，或子类必须实现父类中生命的所有方法。</li>
 <li>尽量把父类设计成抽象类或接口，让子类继承父类或实现父接口。运行时，子类实例替换父类实例。</li>
@@ -370,7 +370,7 @@
 <li><strong>接口隔离原则：</strong><br>一个类对另一个类的依赖应该建立在最小的接口上。建立单一接口，尽量细化接口，接口中的方法尽量少。<br>注意以下几点：  <ul>
 <li>接口尽量小，但是要有限度。</li>
 <li>为依赖接口的类定制服务，只暴露给调用的类它需要的方法，不需要的方法则隐藏起来。</li>
-<li>提高内聚，减少对外交互。接口方法尽量少用 <code>public</code> 修饰。<h2 id="设计模式分类"><a href="#设计模式分类" class="headerlink" title="设计模式分类"></a>设计模式分类</h2>根据目标准则可分为三大类：</li>
+<li>提高内聚，减少对外交互。接口方法尽量少用 <code>public</code> 修饰。<h1 id="设计模式分类"><a href="#设计模式分类" class="headerlink" title="设计模式分类"></a>设计模式分类</h1>根据目标准则可分为三大类：</li>
 </ul>
 </li>
 <li>创建型设计模式，共 5 种：单例模式、工厂方法模式、抽象工厂模式、建造者模式、原型模式。</li>
@@ -536,7 +536,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -582,7 +582,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#设计模式学习笔记（Part-1）"><span class="nav-number">1.</span> <span class="nav-text">设计模式学习笔记（Part.1）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#设计模式六大规则"><span class="nav-number">1.1.</span> <span class="nav-text">设计模式六大规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计模式分类"><span class="nav-number">1.2.</span> <span class="nav-text">设计模式分类</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#设计模式六大规则"><span class="nav-number">1.</span> <span class="nav-text">设计模式六大规则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设计模式分类"><span class="nav-number">2.</span> <span class="nav-text">设计模式分类</span></a></li></ol></div>
             
 
           </div>

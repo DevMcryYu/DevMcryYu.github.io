@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="synchronized 关键字关键字 synchronized 用于声明一段程序为临界区，使线程对临界区的资源采用互斥使用方式。 synchronized 主要有两种用法: 声明一条语句，或者声明一个方法。更细的分类，synchronized可作用于instance变量、object reference（对象引用）、static函数和class literals(类名称字面常量)身上。 同步语句">
+<meta name="description" content="synchronized 关键字关键字 synchronized 用于声明一段程序为临界区，使线程对临界区的资源采用互斥使用方式。 synchronized 主要有两种用法: 声明一条语句，或者声明一个方法。更细的分类，synchronized可作用于instance变量、object reference（对象引用）、static函数和class literals(类名称字面常量)身上。">
 <meta name="keywords" content="Android,多线程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android中线程互斥的实现">
 <meta property="og:url" content="http://yoursite.com/2018/11/04/Android中线程互斥的实现/index.html">
 <meta property="og:site_name" content="DevMcry">
-<meta property="og:description" content="synchronized 关键字关键字 synchronized 用于声明一段程序为临界区，使线程对临界区的资源采用互斥使用方式。 synchronized 主要有两种用法: 声明一条语句，或者声明一个方法。更细的分类，synchronized可作用于instance变量、object reference（对象引用）、static函数和class literals(类名称字面常量)身上。 同步语句">
+<meta property="og:description" content="synchronized 关键字关键字 synchronized 用于声明一段程序为临界区，使线程对临界区的资源采用互斥使用方式。 synchronized 主要有两种用法: 声明一条语句，或者声明一个方法。更细的分类，synchronized可作用于instance变量、object reference（对象引用）、static函数和class literals(类名称字面常量)身上。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-05T03:52:15.827Z">
+<meta property="og:updated_time" content="2018-12-08T06:59:08.798Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android中线程互斥的实现">
-<meta name="twitter:description" content="synchronized 关键字关键字 synchronized 用于声明一段程序为临界区，使线程对临界区的资源采用互斥使用方式。 synchronized 主要有两种用法: 声明一条语句，或者声明一个方法。更细的分类，synchronized可作用于instance变量、object reference（对象引用）、static函数和class literals(类名称字面常量)身上。 同步语句">
+<meta name="twitter:description" content="synchronized 关键字关键字 synchronized 用于声明一段程序为临界区，使线程对临界区的资源采用互斥使用方式。 synchronized 主要有两种用法: 声明一条语句，或者声明一个方法。更细的分类，synchronized可作用于instance变量、object reference（对象引用）、static函数和class literals(类名称字面常量)身上。">
 
 
 
@@ -322,17 +322,6 @@
 
                 
                 
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/多线程/" itemprop="url" rel="index">
-                    <span itemprop="name">多线程</span>
-                  </a>
-                </span>
-
-                
-                
               
             </span>
           
@@ -364,6 +353,7 @@
 
       
         <h2 id="synchronized-关键字"><a href="#synchronized-关键字" class="headerlink" title="synchronized 关键字"></a>synchronized 关键字</h2><p>关键字 synchronized 用于声明一段程序为临界区，使线程对临界区的资源采用互斥使用方式。 synchronized 主要有两种用法: 声明一条语句，或者声明一个方法。更细的分类，synchronized可作用于instance变量、object reference（对象引用）、static函数和class literals(类名称字面常量)身上。</p>
+<a id="more"></a>
 <p><strong>同步语句</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">synchronized</span>(Object)</span><br><span class="line">    Statement;</span><br></pre></td></tr></table></figure></p>
 <p>其中 Object 是多个线程共同操作的公共变量，即需要被锁定的临界资源，他将被互斥的使用； Statement 是临界区，描述线程对临界资源的操作。<br><strong>同步方法</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">pulic <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">(...)</span></span>&#123;</span><br><span class="line">    Statement;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>同步语句与同步方法的行为基本相似，只是前者的作用范围小，它只是锁住一条语句而不是完整的方法。</p>
@@ -537,7 +527,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
